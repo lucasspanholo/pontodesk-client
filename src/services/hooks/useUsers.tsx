@@ -8,20 +8,23 @@ type User = {
   createdAt: string;
 }
 
+type Meta = {
+  current_page: number;
+	totalItems: number;
+	itemsPerPage: number;
+}
+
 type getUsersResponse = {
-  totalCount: number;
+  pagination: Meta[];
   users: User[];
 }
 
-export async function getUsers(page: number): Promise<getUsersResponse> {
-    const { data, headers } = await api.get("/users", {
-      params: {
-        page,
-      }
-    });
+export async function getUsers(): Promise<getUsersResponse> {
+    const { data, headers } = await api.get("/users");
 
-    const totalCount = Number(headers['x-total-count'])
-  
+    // const totalCount = Number(headers['x-total-count'])
+    console.log('user Hook', data)
+    const pagination = data.pagination
     const users = data.users.map((user) => {
       return {
         id: user.id,
@@ -37,12 +40,12 @@ export async function getUsers(page: number): Promise<getUsersResponse> {
 
     return {
       users,
-      totalCount
+      pagination
     };
 }
 
 export function useUsers(page: number, options: UseQueryOptions) {
-  return useQuery(['users', page], () => getUsers(page), {
+  return useQuery(['users', page], () => getUsers(), {
       staleTime: 1000 * 60 * 10 , // 10 minutos
       ...options,
     }); // qual chave que vai ser armazenado no cache
