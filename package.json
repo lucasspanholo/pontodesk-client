@@ -1,5 +1,5 @@
 {
-  "name": "dashgo",
+  "name": "pontodesk-client",
   "private": true,
   "scripts": {
     "dev": "next dev",

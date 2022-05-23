@@ -8,7 +8,7 @@ export function Logo() {
       letterSpacing="tight" 
       w="64"
     >
-      dashGo
+      Pontodesk
       <Text as="span" color="pink.500">
         .
       </Text>
