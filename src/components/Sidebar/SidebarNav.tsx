@@ -9,15 +9,13 @@ export function SidebarNav() {
       <NavSection title="GERAL">
         <NavLink icon={RiLineChartLine} href="/dashboard">Dashboard</NavLink>
         <NavLink icon={RiContactsLine} href="/users">Clientes</NavLink>
-        <NavLink icon={RiFileChartLine} href="/finances">Financeiro</NavLink>
-        <NavLink icon={RiFileChartLine} href="/#">OLa</NavLink>
       </NavSection>
 
       <NavSection title="ESTOQUE">
         <NavLink icon={RiStore3Line} href="/forms">Produtos</NavLink>
       </NavSection>
 
-      <NavSection title="FRENTE DE CAIXA">
+      <NavSection title="ENTRADAS E SAÍDAS">
         <NavLink icon={RiMoneyDollarBoxLine} href="/forms">Caixa</NavLink>
       </NavSection>
     </Stack>
