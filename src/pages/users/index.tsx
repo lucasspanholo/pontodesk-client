@@ -23,32 +23,39 @@ import { Sidebar } from "../../components/Sidebar";
 
 import NextLink from "next/link";
 import { getUsers, useUsers } from "../../services/hooks/useUsers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { queryClient } from "../../services/queryClient";
 import { api } from "../../services/api";
 import { GetServerSideProps } from "next";
+import { useQuery } from "react-query";
 
 export default function UserList({ users }) {
   const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching, error, refetch } = useUsers(page, {
-    initialData: users,
-  });
+  // const { data, isLoading, isFetching, error, refetch } = useUsers(page, {
+  //   initialData: users,
+  // });
+  const { data, isLoading, isFetching, error, refetch } = useQuery('users', async () => {
+    const response = await fetch('http://localhost:3001/api/users')
+    const data = await response.json();
+
+    return data;
+  })
 
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
   });
 
-  async function handlePrefetchUser(userId: string) {
-    await queryClient.prefetchQuery(['user', userId], async () => {
-      const response = await api.get(`users/${userId}`)
-
-      return response.data
-    }, {
-      staleTime: 1000 * 60 * 10, // 10 minutos armazenados em cache
-    })
-  }
+  // async function handlePrefetchUser(userId: string) {
+  //   await queryClient.prefetchQuery(['user', userId], async () => {
+  //     const response = await api.get(`users/${userId}`)
+  //     console.warn('data', response.data)
+  //     return response.data
+  //   }, {
+  //     staleTime: 1000 * 60 * 10, // 10 minutos armazenados em cache
+  //   })
+  // }
 
   return (
     <Box>
@@ -62,7 +69,7 @@ export default function UserList({ users }) {
             <Heading size="lg" fontWeight="normal">
               Usuários
 
-              { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4"/> }
+              {/* { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4"/> } */}
             </Heading>
 
             <NextLink href="/users/create">
@@ -96,13 +103,13 @@ export default function UserList({ users }) {
                       <Checkbox colorScheme="pink" />
                     </Th>
                     <Th>Usuário</Th>
-                    {isWideVersion && <Th>Data de cadastro</Th>}
+                    { isWideVersion && <Th>Data de cadastro</Th> }
                     <Th width="8"></Th>
                   </Tr>
                 </Thead>
 
                 <Tbody>
-                  { users.map(user => {
+                  { data.users.map(user => {
                     return (
                       <Tr key={ user.id }>
                         <Td px={["4", "4", "6"]}>
@@ -110,7 +117,7 @@ export default function UserList({ users }) {
                         </Td>
                         <Td>
                           <Box>
-                            <Link color="purple.400" onMouseEnter={() => handlePrefetchUser(user.id)}>
+                            <Link color="purple.400">
                               <Text fontWeight="bold">{ user.name }</Text>
                             </Link>
                             <Text fontSize="sm" color="gray.300">
@@ -140,8 +147,9 @@ export default function UserList({ users }) {
               </Table>
 
               <Pagination 
-                totalCountOfRegisters={data.totalCount}
-                currentPage={page}
+                totalCountOfRegisters={data.pagination.meta.totalItems}
+                currentPage={data.pagination.meta.current_page}
+                registerPerPage={data.pagination.meta.itemsPerPage}
                 onPageChange={setPage}
               />
             </>
@@ -152,12 +160,12 @@ export default function UserList({ users }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { users, totalCount } = await getUsers(1);
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const { users, totalCount } = await getUsers(1);
 
-  return {
-    props: {
-      users,
-    }
-  }
-}
+//   return {
+//     props: {
+//       users,
+//     }
+//   }
+// }
