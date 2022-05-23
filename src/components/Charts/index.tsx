@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { Props } from 'react-apexcharts';
 import { theme } from '../../styles/theme';
 
-interface ChartsProps extends Props{
+interface ChartsProps extends Props {
   title: string;
 }
 
