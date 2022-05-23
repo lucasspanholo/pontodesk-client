@@ -5,18 +5,17 @@ import { Sidebar } from "../components/Sidebar";
 
 export default function Dashboard() {
   return (
-    <Flex direction="column" h="100vh">
+    <Flex direction="column" height="100vh">
       <Header />
 
       <Flex w="100%" maxWidth={1480} my="6"  mx="auto" px="6">
         <Sidebar />
 
-        <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
+        <SimpleGrid flex="1" gap="4" minChildWidth="320px" alignItems="flex-start">
           <Box 
             p={["6", "8"]}
             bg="gray.800" 
             borderRadius={8}
-            pb="4"
             >
               <Charts title="Vendas do dia" />
           </Box>
@@ -25,7 +24,6 @@ export default function Dashboard() {
             p={["6", "8"]}
             bg="gray.800" 
             borderRadius={8}
-            pb="4"
             >
               <Charts title="Vendas semanais" />
           </Box>
