@@ -3,8 +3,8 @@ import { PaginationItem } from "./PaginationItem";
 
 interface PaginationProps {
   totalCountOfRegisters: number;
-  registerPerPage?: number;
-  currentPage?: number;
+  registerPerPage: number;
+  currentPage: number;
   onPageChange?: (page: number) => void;
 }
 
@@ -20,8 +20,8 @@ function generatePagesArray(from: number, to: number) {
 
 export function Pagination({ 
   totalCountOfRegisters, 
-  registerPerPage = 10, 
-  currentPage = 1, 
+  registerPerPage, 
+  currentPage, 
   onPageChange
  }: PaginationProps) {
   const lastPage = Math.floor(totalCountOfRegisters / registerPerPage);
@@ -43,7 +43,7 @@ export function Pagination({
       spacing="6"
     >
       <Box>
-        <strong>0</strong> - <strong>10</strong> de <strong> 100 </strong>
+        <strong>{currentPage}</strong> - <strong>{registerPerPage}</strong> de <strong> {totalCountOfRegisters} </strong>
       </Box>
 
       <Stack direction="row" spacing="2">
