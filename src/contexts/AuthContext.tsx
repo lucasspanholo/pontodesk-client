@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { api } from "../services/api";
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies } from 'nookies';
 import Router from 'next/router'
 import { useToast } from "@chakra-ui/react";
 
