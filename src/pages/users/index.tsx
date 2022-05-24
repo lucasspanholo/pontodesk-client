@@ -30,17 +30,17 @@ import { api } from "../../services/api";
 import { GetServerSideProps } from "next";
 import { useQuery } from "react-query";
 
-export default function UserList({ users }) {
+export default function UserList({ users, pagination }) {
   const [page, setPage] = useState(1);
-  // const { data, isLoading, isFetching, error, refetch } = useUsers(page, {
-  //   initialData: users,
-  // });
-  const { data, isLoading, isFetching, error, refetch } = useQuery('users', async () => {
-    const response = await fetch('http://localhost:3001/api/users')
-    const data = await response.json();
-
-    return data;
-  })
+  const { data, isLoading, isFetching, error, refetch } = useUsers(page, {
+    initialData: users,
+  });
+  // const { data, isLoading, isFetching, error, refetch } = useQuery('users', async () => {
+  //   const response = await fetch(`${api}/users`)
+  //   const data = await response.json();
+    
+  //   return data;
+  // })
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -109,7 +109,7 @@ export default function UserList({ users }) {
                 </Thead>
 
                 <Tbody>
-                  { data.users.map(user => {
+                  { users.map(user => {
                     return (
                       <Tr key={ user.id }>
                         <Td px={["4", "4", "6"]}>
@@ -147,9 +147,9 @@ export default function UserList({ users }) {
               </Table>
 
               <Pagination 
-                totalCountOfRegisters={data.pagination.meta.totalItems}
-                currentPage={data.pagination.meta.current_page}
-                registerPerPage={data.pagination.meta.itemsPerPage}
+                totalCountOfRegisters={pagination.meta.totalItems}
+                currentPage={pagination.meta.current_page}
+                registerPerPage={pagination.meta.itemsPerPage}
                 onPageChange={setPage}
               />
             </>
@@ -160,12 +160,16 @@ export default function UserList({ users }) {
   );
 }
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const { users, totalCount } = await getUsers(1);
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { users, pagination } = await getUsers();
 
-//   return {
-//     props: {
-//       users,
-//     }
-//   }
-// }
+  console.log('users index', users)
+  console.log('pagination index', pagination)
+
+  return {
+    props: {
+      users,
+      pagination
+    }
+  }
+}
