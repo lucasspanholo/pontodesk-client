@@ -1,8 +1,10 @@
-import { Flex, Button, Stack } from "@chakra-ui/react";
+import { Flex, Button, Stack, Text, Link } from "@chakra-ui/react";
 import { Input } from "../components/Form/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 type SignInFormData = {
   email: string;
@@ -18,17 +20,26 @@ export default function SignIn() {
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signInFormSchema)
   });
+  const { signIn } = useContext(AuthContext);
 
   const { errors } = formState;
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    console.log(values);
+    await signIn(values)
   };
 
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center">
+    <Flex w="100vw" h="100vh" align="center" justify="center" flexDirection="column">
+      <Text
+        fontSize={["2xl", "3xl"]}
+        fontWeight="bold"
+        marginBottom="5"
+      >
+        Pontodesk
+        <Text as="span" color="pink.500">
+          .
+        </Text>
+      </Text>
       <Flex
         as="form"
         w="100%"
@@ -56,6 +67,10 @@ export default function SignIn() {
             {...register("password")}
           />
         </Stack>
+
+        <Link>
+          Criar conta
+        </Link>
 
         <Button
           type="submit"
