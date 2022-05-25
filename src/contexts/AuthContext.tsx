@@ -5,8 +5,10 @@ import Router from 'next/router'
 import { useToast } from "@chakra-ui/react";
 
 type User = {
-  name: string;
   email: string;
+  name: string;
+  nickname: string;
+  image: string;
 }
 
 type AuthContextType = {
@@ -27,17 +29,34 @@ export function AuthProvider({ children }) {
   const toast = useToast()
 
   const isAuthenticated = !!user;
-  
-  useEffect(() => {
-    const { 'pontodesk.access_token': access_token } = parseCookies()
-    const { 'pontodesk.uid': uid } = parseCookies()
-    const { 'pontodesk.client': client } = parseCookies()
 
-    if (access_token && uid && client) {
-      api.get('/auth/validate_token').then((response) => {
-        setUser(response.data)
-      })
+  useEffect(() => {
+    async function getValidatedUserToken() {
+      const { 
+        'pontodesk.access_token': access_token,
+        'pontodesk.uid': uid,
+        'pontodesk.client': client 
+      } = parseCookies();
+  
+      if (access_token && uid && client) {
+        await api.get('/auth/validate_token')
+          .then((response) => {
+          setUser(response.data);
+          console.log(response.data);
+          console.log('user', response.data);
+        })
+          .catch((error) => {
+            toast({
+              title: `${error.message}`,
+              position: 'top-right',
+              status: 'error',
+              isClosable: true,
+            })
+          })
+      }
     }
+
+    getValidatedUserToken();
   }, [])
 
   async function signIn({ email, password }: SignInData) {

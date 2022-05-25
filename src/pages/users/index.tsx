@@ -86,7 +86,7 @@ export default function UserList({ users, pagination }) {
             </NextLink>
           </Flex>
 
-          { isLoading ? (
+          {/* { isLoading ? (
             <Flex justify="center">
               <Spinner />
             </Flex>
@@ -153,23 +153,23 @@ export default function UserList({ users, pagination }) {
                 onPageChange={setPage}
               />
             </>
-          )}
+          )} */}
         </Box>
       </Flex>
     </Box>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { users, pagination } = await getUsers();
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const { users, pagination } = await getUsers();
 
-  console.log('users index', users)
-  console.log('pagination index', pagination)
+//   console.log('users index', users)
+//   console.log('pagination index', pagination)
 
-  return {
-    props: {
-      users,
-      pagination
-    }
-  }
-}
+//   return {
+//     props: {
+//       users,
+//       pagination
+//     }
+//   }
+// }

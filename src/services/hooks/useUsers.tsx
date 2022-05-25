@@ -20,9 +20,8 @@ type getUsersResponse = {
 }
 
 export async function getUsers(): Promise<getUsersResponse> {
-    const { data, headers } = await api.get("/users");
+    const { data } = await api.get("/users");
 
-    // const totalCount = Number(headers['x-total-count'])
     const pagination = data.pagination
     const users = data.users.map((user) => {
       return {

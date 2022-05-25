@@ -33,7 +33,7 @@ const createUserFormSchema = yup.object().shape({
   email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
   password: yup.string()
     .required("Senha obrigatória")
-    .min(6, "No mínimo 6 caracteres"),
+    .min(8, "No mínimo 8 caracteres"),
   password_confirmation: yup.string()
     .oneOf([null, yup.ref("password")], "As senhas precisam ser iguais"),
 });
