@@ -12,12 +12,13 @@ interface SignUpProps {
 }
 
 const signInFormSchema = yup.object().shape({
-  email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
-  password: yup.string().required('Senha obrigatória'),
-  password_confirmation: 
-  yup.string()
-  .required('A confirmação da senha é obrigatória')
-  .oneOf([yup.ref('password')], 'As senhas devem corresponder!'),
+  name: yup.string().required("Nome obrigatório"),
+  email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
+  password: yup.string()
+    .required("Senha obrigatória")
+    .min(8, "No mínimo 8 caracteres"),
+  password_confirmation: yup.string()
+    .oneOf([null, yup.ref("password")], "As senhas precisam ser iguais"),
 })
 
 function SignUp({ }: SignUpProps) {
