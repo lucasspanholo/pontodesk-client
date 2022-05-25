@@ -31,7 +31,7 @@ export default function SignIn() {
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center" flexDirection="column">
       <Text
-        fontSize={["2xl", "3xl"]}
+        fontSize={["3xl", "5xl"]}
         fontWeight="bold"
         marginBottom="5"
       >
@@ -68,10 +68,6 @@ export default function SignIn() {
           />
         </Stack>
 
-        <Link>
-          Criar conta
-        </Link>
-
         <Button
           type="submit"
           mt="6"
@@ -81,6 +77,15 @@ export default function SignIn() {
         >
           Entrar
         </Button>
+
+        <Flex justify="space-between" align="flex-start">
+          <Text mr={3} mt={4}>
+            Não possui conta?
+            <Link ml={2} href="/signup">
+            Clique aqui!
+            </Link>
+          </Text>
+        </Flex>
       </Flex>
     </Flex>
   );
