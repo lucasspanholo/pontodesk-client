@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
     const { 'pontodesk.client': client } = parseCookies()
 
     if (access_token && uid && client) {
-      api.get('/api/auth/validate_token').then((response) => {
+      api.get('/auth/validate_token').then((response) => {
         setUser(response.data)
       })
     }
@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
 
   async function signIn({ email, password }: SignInData) {
     try {
-      const { data, headers } = await api.post("/api/auth/sign_in", { email, password });
+      const { data, headers } = await api.post("auth/sign_in", { email, password });
 
       setUser(data)
       const access_token = headers['access-token']
@@ -69,14 +69,14 @@ export function AuthProvider({ children }) {
 
       toast({
         title: 'Login realizado com sucesso!',
-        position: 'top',
+        position: 'top-right',
         status: 'success',
         isClosable: true,
       })
     } catch {
       toast({
         title: 'Usuário ou senha inválidos!',
-        position: 'top',
+        position: 'top-right',
         status: 'error',
         isClosable: true,
       })

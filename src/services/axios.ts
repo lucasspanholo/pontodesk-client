@@ -9,7 +9,7 @@ export function getAPIClient(context?: any) {
   } = parseCookies(context);
 
   const api = axios.create({
-    baseURL: 'http://localhost:3001'
+    baseURL: 'http://localhost:3001/api'
   })
   
   if (access_token && uid && client) {
