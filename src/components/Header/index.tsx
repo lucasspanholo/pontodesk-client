@@ -1,10 +1,8 @@
 import { Flex, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
-import { parseCookies } from "nookies";
 import { RiMenuLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
 import { api } from "../../services/api";
-import { getAPIClient } from "../../services/axios";
 import { Logo } from "./Logo";
 import { NotificationNav } from "./NotificationsNav";
 import { Profile } from "./Profile";
@@ -54,9 +52,9 @@ export function Header() {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await fetch(`${api}/auth/validate_token`).then(() => response.json());
+  api.get('/auth/validate_token').then((response) => {console.log(response.data);});
   
-  console.log('response Header', response);
+
   return {
     props: {}
   }
