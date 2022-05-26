@@ -8,6 +8,7 @@ import { SidebarDrawerProvider } from '../contexts/SidebarDrawerContext'
 // import { makeServer } from '../services/mirage'
 import { queryClient } from '../services/queryClient';
 import { AuthProvider } from '../contexts/AuthContext';
+import Head from 'next/head';
 
 if (process.env.NODE_ENV === 'development') {
   // makeServer();
@@ -15,17 +16,23 @@ if (process.env.NODE_ENV === 'development') {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider resetCSS theme={theme}>
-        <AuthProvider>
-          <SidebarDrawerProvider>
-            <Component {...pageProps} />
-          </SidebarDrawerProvider>
-        </AuthProvider>
-      </ChakraProvider>
+    <>
+      <Head>
+        <title>Pontodesk.</title>
+      </Head>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider resetCSS theme={theme}>
+          <AuthProvider>
+            <SidebarDrawerProvider>
+              <Component {...pageProps} />
+            </SidebarDrawerProvider>
+          </AuthProvider>
+        </ChakraProvider>
 
-      {/* <ReactQueryDevtools /> */}
-    </QueryClientProvider>
+        {/* <ReactQueryDevtools /> */}
+      </QueryClientProvider>
+    </>
+
   )
 }
 
