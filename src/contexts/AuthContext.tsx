@@ -32,19 +32,18 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     async function getValidatedUserToken() {
-      const { 
+      const {
         'pontodesk.access_token': access_token,
         'pontodesk.uid': uid,
-        'pontodesk.client': client 
+        'pontodesk.client': client
       } = parseCookies();
-  
+
       if (access_token && uid && client) {
         await api.get('/auth/validate_token')
           .then((response) => {
-          setUser(response.data);
-          console.log(response.data);
-          console.log('user', response.data);
-        })
+            setUser(response.data);
+            console.log('user', response.data);
+          })
           .catch((error) => {
             toast({
               title: `${error.message}`,
