@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Input } from "../components/Form/Input";
 import { api } from "../services/api";
+import Router from 'next/router'
 
 interface SignUpProps {
   email: string;
@@ -13,11 +14,8 @@ interface SignUpProps {
 
 const signInFormSchema = yup.object().shape({
   email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
-  password: yup.string().required('Senha obrigatória'),
-  password_confirmation: 
-  yup.string()
-  .required('A confirmação da senha é obrigatória')
-  .oneOf([yup.ref('password')], 'As senhas devem corresponder!'),
+  password: yup.string().required('Senha obrigatória').min(8, "No mínimo 8 caracteres"),
+  password_confirmation: yup.string().required('A confirmação da senha é obrigatória').oneOf([yup.ref('password')], 'As senhas devem corresponder!'),
 })
 
 function SignUp({ }: SignUpProps) {
@@ -27,19 +25,26 @@ function SignUp({ }: SignUpProps) {
   const { errors } = formState;
   const toast = useToast();
 
-  async function handleCreateUser(data) {
-    const dataForm = data as SignUpProps;
-    console.log('data', data)
+  async function handleCreateUser({ email, password, password_confirmation }: SignUpProps) {
+    const userData = { email, password, password_confirmation };
+
     try {
-      await api.post('/auth', dataForm).then((response) => {console.log('response', response)})
+      await api.post('/auth', userData)
       toast({
         title: 'Conta cadastrada com sucesso!',
         position: 'top-right',
         status: 'success',
         isClosable: true,
       })
+
+      Router.push('/')
     } catch (error) {
-      console.log('error', error)
+      toast({
+        title: 'Usuário já cadastrado no sistema!',
+        position: 'top-right',
+        status: 'error',
+        isClosable: true,
+      })
     }
   }
 
