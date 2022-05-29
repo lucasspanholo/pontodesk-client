@@ -32,17 +32,12 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     async function getValidatedUserToken() {
-      const {
-        'pontodesk.access_token': access_token,
-        'pontodesk.uid': uid,
-        'pontodesk.client': client
-      } = parseCookies();
+      const { 'pontodesk.token': token } = await parseCookies();
 
-      if (access_token && uid && client) {
-        await api.get('/auth/validate_token')
+      if (token) {
+        await api.get('auth_token')
           .then((response) => {
             setUser(response.data);
-            console.log('user', response.data);
           })
           .catch((error) => {
             toast({
@@ -60,30 +55,16 @@ export function AuthProvider({ children }) {
 
   async function signIn({ email, password }: SignInData) {
     try {
-      const { data, headers } = await api.post("auth/sign_in", { email, password });
+      const { data } = await api.post("auth", { email, password });
 
-      setUser(data)
-      const access_token = headers['access-token']
-      const uid = headers['uid']
-      const client = headers['client']
+      console.log(data);
 
-      setCookie(undefined, 'pontodesk.access_token', access_token,
+      setUser(data.user)
+      const token = data.token
+
+      setCookie(undefined, 'pontodesk.token', token,
         { maxAge: 60 * 60 * 1 } // 1 hour
       );
-
-      setCookie(undefined, 'pontodesk.uid', uid,
-        { maxAge: 60 * 60 * 1 } // 1 hour
-      );
-
-      setCookie(undefined, 'pontodesk.client', client,
-        { maxAge: 60 * 60 * 1 } // 1 hour
-      );
-
-      api.defaults.headers['access_token'] = access_token;
-      api.defaults.headers['uid'] = uid;
-      api.defaults.headers['client'] = client;
-
-      Router.push('dashboard')
 
       toast({
         title: 'Login realizado com sucesso!',
@@ -91,6 +72,8 @@ export function AuthProvider({ children }) {
         status: 'success',
         isClosable: true,
       })
+
+      Router.push('dashboard')
     } catch {
       toast({
         title: 'Usuário ou senha inválidos!',

@@ -2,20 +2,14 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 
 export function getAPIClient(context?: any) {
-  const {
-    'pontodesk.access_token': access_token,
-    'pontodesk.uid': uid,
-    'pontodesk.client': client
-  } = parseCookies(context);
+  const {'pontodesk.token': token} = parseCookies(context);
 
   const api = axios.create({
-    baseURL: 'http://localhost:3001/api'
+    baseURL: 'http://localhost:3001/api/v1/'
   })
   
-  if (access_token && uid && client) {
-    api.defaults.headers['access_token'] = access_token;
-    api.defaults.headers['uid'] = uid;
-    api.defaults.headers['client'] = client;
+  if (token) {
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
   }
 
   return api;

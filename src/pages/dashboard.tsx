@@ -32,13 +32,9 @@ export default function Dashboard() {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const apiClient = getAPIClient(context);
-  const {
-    ['pontodesk.uid']: uid,
-    ['pontodesk.client']: client,
-    ['pontodesk.access_token']: access_token 
-  } = parseCookies(context)
+  const {['pontodesk.token']: token } = parseCookies(context)
 
-  if (!access_token && !uid && !client) {
+  if (!token) {
     return {
       redirect: {
         destination: '/',
