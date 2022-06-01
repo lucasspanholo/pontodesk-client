@@ -20,6 +20,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { api } from "../../services/api";
 import { queryClient } from "../../services/queryClient";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
 
 type CreateUserFormData = {
   name: string;
@@ -138,4 +140,21 @@ export default function CreateUser() {
       </Flex>
     </Box>
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const {['pontodesk.token']: token } = parseCookies(context)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+  
+  return {
+    props: {}
+  }
 }

@@ -29,18 +29,19 @@ import { queryClient } from "../../services/queryClient";
 import { api } from "../../services/api";
 import { GetServerSideProps } from "next";
 import { useQuery } from "react-query";
+import { parseCookies } from "nookies";
+import Card from "../../components/Card";
 
 export default function UserList({ users, pagination }) {
   const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching, error, refetch } = useUsers(page, {
-    initialData: users,
-  });
-  // const { data, isLoading, isFetching, error, refetch } = useQuery('users', async () => {
-  //   const response = await fetch(`${api}/users`)
-  //   const data = await response.json();
-    
-  //   return data;
-  // })
+  // const { data, isLoading, isFetching, error, refetch } = useUsers(page, {
+  //   initialData: users,
+  // });
+  const { data, isLoading, isFetching, error, refetch } = useQuery('users', async () => {
+    const data = await api.get("/usersall");
+
+    return data;
+  })
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -58,13 +59,8 @@ export default function UserList({ users, pagination }) {
   // }
 
   return (
-    <Box>
-      <Header />
-
-      <Flex w="100%" maxWidth={1480} my="6" mx="auto" px="6">
-        <Sidebar />
-
-        <Box flex="1" borderRadius={8} bg="gray.800" p="8">
+   <Card>
+    <Box flex="1" borderRadius={8} bg="gray.800" p="8">
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Usuários
@@ -86,7 +82,7 @@ export default function UserList({ users, pagination }) {
             </NextLink>
           </Flex>
 
-          {/* { isLoading ? (
+           { isLoading ? (
             <Flex justify="center">
               <Spinner />
             </Flex>
@@ -109,7 +105,7 @@ export default function UserList({ users, pagination }) {
                 </Thead>
 
                 <Tbody>
-                  { users.map(user => {
+                  { data.data.users.map(user => {
                     return (
                       <Tr key={ user.id }>
                         <Td px={["4", "4", "6"]}>
@@ -125,7 +121,7 @@ export default function UserList({ users, pagination }) {
                             </Text>
                           </Box>
                         </Td>
-                        { isWideVersion && <Td>{ user.createdAt }</Td>}
+                        { isWideVersion && <Td>{ user.created_at }</Td>}
                         <Td>
                           { isWideVersion && (
                             <Button
@@ -147,29 +143,38 @@ export default function UserList({ users, pagination }) {
               </Table>
 
               <Pagination 
-                totalCountOfRegisters={pagination.meta.totalItems}
-                currentPage={pagination.meta.current_page}
-                registerPerPage={pagination.meta.itemsPerPage}
+                totalCountOfRegisters={data.data.pagination.meta.totalItems}
+                currentPage={data.data.pagination.meta.current_page}
+                registerPerPage={data.data.pagination.meta.itemsPerPage}
                 onPageChange={setPage}
               />
             </>
-          )} */}
+          )}
         </Box>
-      </Flex>
-    </Box>
+   </Card>
   );
 }
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const { users, pagination } = await getUsers();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { ['pontodesk.token']: token } = parseCookies(context)
+  // const { users, pagination } = await getUsers();
 
-//   console.log('users index', users)
-//   console.log('pagination index', pagination)
+  // console.log('users index', users)
+  // console.log('pagination index', pagination)
 
-//   return {
-//     props: {
-//       users,
-//       pagination
-//     }
-//   }
-// }
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      // users,
+      // pagination
+    }
+  }
+}
