@@ -56,11 +56,9 @@ export function AuthProvider({ children }) {
   async function signIn({ email, password }: SignInData) {
     try {
       const { data } = await api.post("auth", { email, password });
-
-      console.log(data);
+      const token = data.token
 
       setUser(data.user)
-      const token = data.token
 
       setCookie(undefined, 'pontodesk.token', token,
         { maxAge: 60 * 60 * 1 } // 1 hour
