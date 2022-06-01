@@ -31,7 +31,6 @@ export default function Dashboard() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apiClient = getAPIClient(context);
   const {['pontodesk.token']: token } = parseCookies(context)
 
   if (!token) {
