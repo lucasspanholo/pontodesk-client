@@ -20,9 +20,9 @@ type getUsersResponse = {
 }
 
 export async function getUsers(): Promise<getUsersResponse> {
-    const { data } = await api.get("/users");
+    const { data } = await api.get("/usersall");
+    const pagination = data.pagination.meta
 
-    const pagination = data.pagination
     const users = data.users.map((user) => {
       return {
         id: user.id,
@@ -36,6 +36,9 @@ export async function getUsers(): Promise<getUsersResponse> {
       }
     });
 
+    console.log(users)
+    console.log(pagination)
+    
     return {
       users,
       pagination
