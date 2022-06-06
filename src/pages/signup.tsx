@@ -3,16 +3,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Input } from "../components/Form/Input";
-import { api } from "../services/api";
+import { api, apiCreateUser } from "../services/api";
 import Router from 'next/router'
 
 interface SignUpProps {
+  name: string;
   email: string;
   password: string;
   password_confirmation: string;
 }
 
 const signInFormSchema = yup.object().shape({
+  name: yup.string().required('Nome obrigatório'),
   email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
   password: yup.string().required('Senha obrigatória').min(8, "No mínimo 8 caracteres"),
   password_confirmation: yup.string().required('A confirmação da senha é obrigatória').oneOf([yup.ref('password')], 'As senhas devem corresponder!'),
@@ -25,11 +27,11 @@ function SignUp({ }: SignUpProps) {
   const { errors } = formState;
   const toast = useToast();
 
-  async function handleCreateUser({ email, password, password_confirmation }: SignUpProps) {
-    const userData = { email, password, password_confirmation };
+  async function handleCreateUser({ name, email, password, password_confirmation }: SignUpProps) {
+    const userData = { name, email, password, password_confirmation };
 
     try {
-      await api.post('/auth', userData)
+      await apiCreateUser.post('users', userData)
       toast({
         title: 'Conta cadastrada com sucesso!',
         position: 'top-right',
@@ -71,6 +73,14 @@ function SignUp({ }: SignUpProps) {
         onSubmit={handleSubmit(handleCreateUser)}
       >
         <Stack spacing="4">
+          <Input
+            name="name"
+            type="text"
+            label="Nome Completo"
+            error={errors.name}
+            {...register("name")}
+          />
+
           <Input
             name="email"
             type="email"
