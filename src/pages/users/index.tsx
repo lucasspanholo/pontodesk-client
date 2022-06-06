@@ -31,6 +31,7 @@ import { GetServerSideProps } from "next";
 import { useQuery } from "react-query";
 import { parseCookies } from "nookies";
 import Card from "../../components/Card";
+import { getAPIClient } from "../../services/axios";
 
 export default function UserList({ users, pagination }) {
   const [page, setPage] = useState(1);
@@ -38,9 +39,9 @@ export default function UserList({ users, pagination }) {
   //   initialData: users,
   // });
   const { data, isLoading, isFetching, error, refetch } = useQuery('users', async () => {
-    const data = await api.get("/usersall");
+    // const data = await api.get("/usersall");
 
-    return data;
+    // return data;
   })
 
   const isWideVersion = useBreakpointValue({
@@ -105,7 +106,7 @@ export default function UserList({ users, pagination }) {
                 </Thead>
 
                 <Tbody>
-                  { data.data.users.map(user => {
+                  { users.map(user => {
                     return (
                       <Tr key={ user.id }>
                         <Td px={["4", "4", "6"]}>
@@ -142,12 +143,12 @@ export default function UserList({ users, pagination }) {
                 </Tbody>
               </Table>
 
-              <Pagination 
-                totalCountOfRegisters={data.data.pagination.meta.totalItems}
-                currentPage={data.data.pagination.meta.current_page}
-                registerPerPage={data.data.pagination.meta.itemsPerPage}
+              {/* <Pagination 
+                totalCountOfRegisters={pagination.meta.totalItems}
+                currentPage={pagination.meta.current_page}
+                registerPerPage={pagination.meta.itemsPerPage}
                 onPageChange={setPage}
-              />
+              /> */}
             </>
           )}
         </Box>
@@ -157,10 +158,7 @@ export default function UserList({ users, pagination }) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { ['pontodesk.token']: token } = parseCookies(context)
-  // const { users, pagination } = await getUsers();
-
-  // console.log('users index', users)
-  // console.log('pagination index', pagination)
+  const apiClient = await getAPIClient(context)
 
   if (!token) {
     return {
@@ -171,10 +169,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
+  const { data } = await apiClient.get("/usersall");
+
+  const users = data.users
+  const pagination = data.pagination.meta
+
   return {
     props: {
-      // users,
-      // pagination
+      users,
+      pagination
     }
   }
 }
