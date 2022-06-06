@@ -1,5 +1,6 @@
-import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, IconButton, Menu, MenuButton, MenuDivider, MenuGroup, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import { useContext } from "react";
+import { RiContactsLine, RiMenuLine } from "react-icons/ri";
 import { AuthContext } from "../../contexts/AuthContext";
 interface ProfileProps {
   showProfileData?: boolean;
@@ -13,15 +14,41 @@ export function Profile({ showProfileData }: ProfileProps) {
       {
         showProfileData &&
         (
-          <Box mr="4" textAlign="right">
-            <Text>{user ? user.name : ''}</Text>
-            <Text color="gray.300" fontSize="small">
-              {user ? user.email : ''}
-            </Text>
-          </Box>
+          <>
+            <Box mr="4" textAlign="right">
+              <Text>{user ? user.name : ''}</Text>
+              <Text color="gray.300" fontSize="small">
+                {user ? user.email : ''}
+              </Text>
+            </Box>
+
+            <Avatar size="md" name={user ? user.name : ''} src=""></Avatar>
+
+            <Menu>
+              <MenuButton as={IconButton}
+                aria-label='Options'
+                variant='outline'
+                icon={<RiMenuLine />}
+                colorScheme='pink'
+              >
+              </MenuButton>
+              <MenuList>
+                <MenuGroup title='Profile'>
+                  <MenuItem>My Account</MenuItem>
+                  <MenuItem>Payments </MenuItem>
+                </MenuGroup>
+                <MenuDivider />
+                <MenuGroup title='Help'>
+                  <MenuItem>Docs</MenuItem>
+                  <MenuItem>FAQ</MenuItem>
+                </MenuGroup>
+              </MenuList>
+            </Menu>
+          </>
+
         )
       }
-      <Avatar size="md" name={user ? user.name : ''} src=""></Avatar>
+
     </Flex>
   );
 }
