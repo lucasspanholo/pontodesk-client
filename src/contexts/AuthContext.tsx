@@ -9,6 +9,7 @@ type User = {
   name: string;
   nickname: string;
   image: string;
+  admin: boolean;
 }
 
 type AuthContextType = {
@@ -35,8 +36,11 @@ export function AuthProvider({ children }) {
       const { 'pontodesk.token': token } = await parseCookies();
 
       if (token) {
+        console.log(token)
+
         await api.get('auth_token')
           .then((response) => {
+            console.log(response.data)
             setUser(response.data);
           })
           .catch((error) => {
@@ -54,32 +58,46 @@ export function AuthProvider({ children }) {
   }, [])
 
   async function signIn({ email, password }: SignInData) {
-    try {
-      const { data } = await api.post("auth", { email, password });
-      const token = data.token
+    await api.post("auth", { email, password })
+      .then((response) => {
+        console.log(response)
 
-      setUser(data.user)
+        if (response.data.errors) {
+          toast({
+            title: 'Usuário ou senha inválidos!',
+            position: 'top-right',
+            status: 'error',
+            isClosable: true,
+          })
+        } else {
+          const token = response.data.token
+          setUser(response.data.user)
 
-      setCookie(undefined, 'pontodesk.token', token,
-        { maxAge: 60 * 60 * 1 } // 1 hour
-      );
+          setCookie(undefined, 'pontodesk.token', token,
+            { maxAge: 60 * 60 * 1 } // 1 hour
+          );
 
-      toast({
-        title: 'Login realizado com sucesso!',
-        position: 'top-right',
-        status: 'success',
-        isClosable: true,
+          toast({
+            title: 'Login realizado com sucesso!',
+            position: 'top-right',
+            status: 'success',
+            isClosable: true,
+          })
+
+          if (user.admin) {
+            Router.push('dashboard')
+          } else {
+            Router.push('calls')
+          }
+        }
+      }).catch(() => {
+        toast({
+          title: 'Não foi possível se conectar ao servidor!',
+          position: 'top-right',
+          status: 'error',
+          isClosable: true,
+        })
       })
-
-      Router.push('dashboard')
-    } catch {
-      toast({
-        title: 'Usuário ou senha inválidos!',
-        position: 'top-right',
-        status: 'error',
-        isClosable: true,
-      })
-    }
   }
 
   return (
