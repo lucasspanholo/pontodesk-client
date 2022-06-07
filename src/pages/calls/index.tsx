@@ -1,33 +1,22 @@
-import { Button, Icon, Text } from '@chakra-ui/react';
 import React from 'react';
 import Card from '../../components/Card';
-import NextLink from "next/link";
-import { RiAddLine } from 'react-icons/ri';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
+import CardBox from '../../components/CardBox';
+import { getAPIClient } from '../../services/axios';
 
-export default function CallsList() {
+export default function CallsList({ calls }) {
   return (
     <Card>
-      <Text>Hello calls</Text>
-      <NextLink href="/calls/create">
-        <Button
-          as="a"
-          size="sm"
-          fontSize="sm"
-          colorScheme="pink"
-          cursor="pointer"
-          leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-        >
-          Criar novo
-        </Button>
-      </NextLink>
+      <CardBox title="Chamados em aberto" buttonRedirect="/calls/create">
+      </CardBox>
     </Card>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const {['pontodesk.token']: token } = parseCookies(context)
+  const { ['pontodesk.token']: token } = parseCookies(context)
+  const apiClient = await getAPIClient(context)
 
   if (!token) {
     return {
@@ -37,8 +26,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
     }
   }
-  
+
+  const { data } = await apiClient.get("/calls_all");
+
+  console.log(data)
+
+  const calls = data.calls
+  // const pagination = data.pagination.meta
+
   return {
-    props: {}
+    props: {
+      // calls
+    }
   }
 }
