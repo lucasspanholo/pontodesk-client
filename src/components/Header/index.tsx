@@ -1,9 +1,8 @@
 import { Button, Flex, Icon, IconButton, useBreakpointValue, useColorMode } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
-import { RiMenuLine } from "react-icons/ri";
+import { RiMenuLine, RiMoonLine, RiSunLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
 import { api } from "../../services/api";
-import ColorModeSwitch from "./ColorModeSwitch";
 import { Logo } from "./Logo";
 import { NotificationNav } from "./NotificationsNav";
 import { Profile } from "./Profile";
@@ -12,7 +11,7 @@ import { SearchBox } from "./SearchBox";
 export function Header() {
   const { onOpen } = useSidebarDrawer();
   const { colorMode, toggleColorMode } = useColorMode()
-  
+
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -30,7 +29,7 @@ export function Header() {
       px="6"
       align="center"
     >
-      { !isWideVersion && (
+      {!isWideVersion && (
         <IconButton
           aria-label="Open navigation"
           icon={<Icon as={RiMenuLine} />}
@@ -40,16 +39,20 @@ export function Header() {
           mr="2"
           mt="2"
         />
-      ) }
+      )}
 
       <Logo />
-      
-      <SearchBox showSearchBox={isWideVersion}/>
+
+      <SearchBox showSearchBox={isWideVersion} />
 
       <Button onClick={toggleColorMode}>
-        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+        {colorMode === 'light' ?
+          <Icon as={RiMoonLine} fontSize="20" />
+          :
+          <Icon as={RiSunLine} fontSize="20" />
+        }
       </Button>
-      
+
       <Flex align="center" ml="auto">
         <NotificationNav />
         <Profile showProfileData={isWideVersion} />
@@ -59,8 +62,8 @@ export function Header() {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  api.get('/auth/validate_token').then((response) => {console.log(response.data);});
-  
+  api.get('/auth/validate_token').then((response) => { console.log(response.data); });
+
 
   return {
     props: {}
