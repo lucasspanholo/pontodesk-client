@@ -1,8 +1,9 @@
-import { Flex, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react";
+import { Button, Flex, Icon, IconButton, useBreakpointValue, useColorMode } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { RiMenuLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
 import { api } from "../../services/api";
+import ColorModeSwitch from "./ColorModeSwitch";
 import { Logo } from "./Logo";
 import { NotificationNav } from "./NotificationsNav";
 import { Profile } from "./Profile";
@@ -10,6 +11,8 @@ import { SearchBox } from "./SearchBox";
 
 export function Header() {
   const { onOpen } = useSidebarDrawer();
+  const { colorMode, toggleColorMode } = useColorMode()
+  
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -42,6 +45,10 @@ export function Header() {
       <Logo />
       
       <SearchBox showSearchBox={isWideVersion}/>
+
+      <Button onClick={toggleColorMode}>
+        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+      </Button>
       
       <Flex align="center" ml="auto">
         <NotificationNav />

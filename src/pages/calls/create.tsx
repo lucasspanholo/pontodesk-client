@@ -6,6 +6,7 @@ import {
   Heading,
   HStack,
   SimpleGrid,
+  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -42,6 +43,8 @@ const createUserFormSchema = yup.object().shape({
 
 export default function CreateCall() {
   const router = useRouter();
+
+  const bg = useColorModeValue('gray.50', 'gray.800');
   
   const createCall = useMutation(async (user: CreateUserFormData) => {
     const response = await api.post('users', {
@@ -80,7 +83,7 @@ export default function CreateCall() {
         <Box as="form" 
           flex="1"
           borderRadius={8}
-          bg="gray.800" 
+          bg={bg}
           p={["6", "8"]}
           onSubmit={handleSubmit(handleCreateUser)}
         >

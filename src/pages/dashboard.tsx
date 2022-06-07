@@ -1,17 +1,18 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { parseCookies } from 'nookies'
 import Card from "../components/Card";
 import { Charts } from "../components/Charts";
-import { getAPIClient } from "../services/axios";
 
 export default function Dashboard() {
+  const bg = useColorModeValue('gray.50', 'gray.800')
+
   return (
     <Card>
       <SimpleGrid flex="1" gap="4" minChildWidth="320px" alignItems="flex-start">
           <Box
             p={["6", "8"]}
-            bg="gray.800"
+            bg={bg}
             borderRadius={8}
           >
             <Charts title="Total de chamados hoje" />
@@ -19,7 +20,7 @@ export default function Dashboard() {
 
           <Box
             p={["6", "8"]}
-            bg="gray.800"
+            bg={bg}
             borderRadius={8}
           >
             <Charts title="Total de chamados na semana" />
