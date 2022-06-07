@@ -14,41 +14,15 @@ export function Profile({ showProfileData }: ProfileProps) {
       {
         showProfileData &&
         (
-          <>
-            <Box mr="4" textAlign="right">
-              <Text>{user ? user.name : ''}</Text>
-              <Text color="gray.300" fontSize="small">
-                {user ? user.email : ''}
-              </Text>
-            </Box>
-
-            <Avatar size="md" name={user ? user.name : ''} src=""></Avatar>
-
-            <Menu>
-              <MenuButton as={IconButton}
-                aria-label='Options'
-                variant='outline'
-                icon={<RiMenuLine />}
-                colorScheme='pink'
-              >
-              </MenuButton>
-              <MenuList>
-                <MenuGroup title='Profile'>
-                  <MenuItem>My Account</MenuItem>
-                  <MenuItem>Payments </MenuItem>
-                </MenuGroup>
-                <MenuDivider />
-                <MenuGroup title='Help'>
-                  <MenuItem>Docs</MenuItem>
-                  <MenuItem>FAQ</MenuItem>
-                </MenuGroup>
-              </MenuList>
-            </Menu>
-          </>
-
+          <Box mr="4" textAlign="right">
+            <Text>{user ? user.name : ''}</Text>
+            <Text color="gray.300" fontSize="small">
+              {user ? user.email : ''}
+            </Text>
+          </Box>
         )
       }
-
+      <Avatar size="md" name={user ? user.name : ''} src=""></Avatar>
     </Flex>
   );
 }
