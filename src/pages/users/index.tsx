@@ -18,13 +18,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { Header } from "../../components/Header";
-import { Pagination } from "../../components/Pagination";
-import { Sidebar } from "../../components/Sidebar";
 
 import NextLink from "next/link";
 import { getUsers, useUsers } from "../../services/hooks/useUsers";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 import { GetServerSideProps } from "next";
@@ -61,7 +58,7 @@ export default function UserList({ users, pagination }) {
             {/* { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4"/> } */}
           </Heading>
 
-          <NextLink href="/users/create">
+          <NextLink href="/calls/create">
             <Button
               as="a"
               size="sm"
@@ -81,7 +78,7 @@ export default function UserList({ users, pagination }) {
           </Flex>
         ) : error ? (
           <Flex justify="center">
-            <Text>Falha ao obter os dados dos usuários</Text>
+            <Text>Falha ao obter todos os chamados!</Text>
           </Flex>
         ) : (
           <>
