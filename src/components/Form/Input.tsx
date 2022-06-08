@@ -19,7 +19,8 @@ interface InputProps extends ChakraInputProps {
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   { name, label, error = null, ...rest }, ref
 ) => {
-  const bg = useColorModeValue('gray.50', 'gray.900')
+  const bg = useColorModeValue('gray.100', 'gray.900')
+  const focus = useColorModeValue('green.200', 'green.500')
 
   return (
     <FormControl isInvalid={!!error}>
@@ -28,7 +29,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       <ChakraInput
         name={name}
         id={name}
-        focusBorderColor="pink.500"
+        focusBorderColor={focus}
         bgColor={bg}
         variant="filled"
         _hover={{

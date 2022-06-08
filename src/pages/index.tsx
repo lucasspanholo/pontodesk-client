@@ -1,4 +1,4 @@
-import { Flex, Button, Stack, Text, Link } from "@chakra-ui/react";
+import { Flex, Button, Stack, Text, Link, useColorModeValue } from "@chakra-ui/react";
 import { Input } from "../components/Form/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -24,6 +24,9 @@ export default function SignIn() {
 
   const { errors } = formState;
 
+  const bg = useColorModeValue('gray.50', 'gray.900')
+  const color = useColorModeValue('green', 'green.600')
+
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
     await signIn(values)
   };
@@ -36,7 +39,7 @@ export default function SignIn() {
         marginBottom="5"
       >
         Pontodesk
-        <Text as="span" color="pink.500">
+        <Text as="span" color="green.500">
           .
         </Text>
       </Text>
@@ -44,7 +47,7 @@ export default function SignIn() {
         as="form"
         w="100%"
         maxWidth={360}
-        bg="gray.800"
+        bg={bg}
         p="8" // medida chakra
         borderRadius={8}
         flexDir="column"
@@ -71,7 +74,7 @@ export default function SignIn() {
         <Button
           type="submit"
           mt="6"
-          colorScheme="pink"
+          colorScheme="green"
           size="lg"
           isLoading={formState.isSubmitting}
         >
@@ -79,7 +82,7 @@ export default function SignIn() {
         </Button>
 
         <Flex justify="space-between" align="flex-start">
-          <Text mr={3} mt={4}>
+          <Text mr={3} mt={4} color={color}>
             Não possui conta?
             <Link ml={2} href="/signup">
             Clique aqui!
