@@ -36,8 +36,6 @@ export function AuthProvider({ children }) {
       const { 'pontodesk.token': token } = await parseCookies();
 
       if (token) {
-        console.log(token)
-
         await api.get('auth_token')
           .then((response) => {
             console.log(response.data)
