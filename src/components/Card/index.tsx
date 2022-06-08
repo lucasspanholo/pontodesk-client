@@ -1,9 +1,13 @@
 import { Flex } from '@chakra-ui/react'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Header } from '../Header'
 import { Sidebar } from '../Sidebar'
 
-export default function Card({children}) {
+type CardProps = {
+  children: ReactElement;
+}
+
+export default function Card({ children }: CardProps) {
   return (
     <Flex direction="column" height="100vh">
       <Header />
