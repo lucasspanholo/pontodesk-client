@@ -8,8 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { forwardRef, ForwardRefRenderFunction } from "react";
 import { FieldError } from "react-hook-form";
-
-
 interface InputProps extends ChakraInputProps {
   name: string;
   label?: string;

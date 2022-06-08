@@ -9,7 +9,7 @@ export function Logo() {
       w="64"
     >
       Pontodesk
-      <Text as="span" color="pink.500">
+      <Text as="span" color="green.500">
         .
       </Text>
     </Text>

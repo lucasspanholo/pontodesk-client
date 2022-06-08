@@ -3,15 +3,14 @@ import { GetServerSideProps } from "next";
 import { RiMenuLine, RiMoonLine, RiSunLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
 import { api } from "../../services/api";
+import ButtonLightOrDark from "../ButtonLightOrDark";
 import { Logo } from "./Logo";
-import { NotificationNav } from "./NotificationsNav";
+import { NotificationNav } from "./NotificationNav";
 import { Profile } from "./Profile";
 import { SearchBox } from "./SearchBox";
 
 export function Header() {
   const { onOpen } = useSidebarDrawer();
-  const { colorMode, toggleColorMode } = useColorMode()
-
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -45,13 +44,7 @@ export function Header() {
 
       <SearchBox showSearchBox={isWideVersion} />
 
-      <Button onClick={toggleColorMode}>
-        {colorMode === 'light' ?
-          <Icon as={RiMoonLine} fontSize="20" />
-          :
-          <Icon as={RiSunLine} fontSize="20" />
-        }
-      </Button>
+      <ButtonLightOrDark />
 
       <Flex align="center" ml="auto">
         <NotificationNav />
