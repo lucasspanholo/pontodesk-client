@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import ButtonLightOrDark from "../components/ButtonLightOrDark";
 
 type SignInFormData = {
   email: string;
@@ -90,6 +91,7 @@ export default function SignIn() {
           </Text>
         </Flex>
       </Flex>
+      <ButtonLightOrDark />
     </Flex>
   );
 }
