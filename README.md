@@ -1,34 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h2>
+  📃 Sobre a aplicação
+</h2>
 
-## Getting Started
+<i>Pontodesk.</i> É uma aplicação onde o foco é resolver um problema de controle interno de chamados de suporte técnico. Tendo isso como referência dentro do sistema você poderá: 
 
-First, run the development server:
+<ul>
+  <li>Criar sua conta de usuário para poder começar a solicitar seus chamados e claro acompanhar seu status em tempo real.</li>
+  <li>Caso seja ADMIN, você terá permissões a mais dentro da plataforma. (Controle de usuários, dashboard com principais indices de acompanhamento, possibilidade de solucionar chamados e claro encaminhar um parecer ao usuário.</li>
+  <li> Em desenvolvimento - Possibilidade de gerar uma analise por parte dos usuários que abriram chamados, após sua resolução.
+</ul>
 
-```bash
-npm run dev
-# or
-yarn dev
+<h2>📼 Prévia</h2>
+<p align="center">
+  Em desenvolvimento!!
+ <!-- <img src="https://media.giphy.com/media/XKcBCMoloWR3fDqqXm/giphy.gif"></img> -->
+</p>
+
+
+<h2>🔧 Ferramentas utilizadas</h2>
+Para o desenvolvimento do sistema, foram utilizados as principais ferramentas:
+<ul>
+  <li><a href="https://pt-br.reactjs.org/">ReactJS</a></li>
+  <li><a href="https://nextjs.org/">NextJS</a></li>
+  <li><a href="https://chakra-ui.com/">Chakra-UI</a></li>
+  <li><a href="https://react-icons.github.io/react-icons/icons?name=fa">React-Icons-Font-Awesome</a></li>
+  <li><a href="https://react-hook-form.com/">React-Hook-Form</a></li>
+  <li><a href="https://blog.betrybe.com/desenvolvimento-web/yup/#1">Yup</a></li>
+  <li><a href="https://axios-http.com/ptbr/docs/intro">Axios</a></li>
+  <li><a href="https://apexcharts.com/">ApexCharts</a></li>
+</ul>
+
+<h2>⚙ Rodando a aplicação</h2>
+<ul>
+  <li>É <b>necessário</b> possuir o <a href="https://nodejs.org/en/">Node.js</a> em sua máquina.</li>
+  <li>Também é <b>preciso</b> ter um gerenciador de pacotes, seja o <a href="https://www.npmjs.com/">NPM</a> ou <a href="https://yarnpkg.com/">Yarn</a>.</li>
+</ul>
+
+<h3>Caso tudo esteja certo, basta seguir os passos abaixo.</h3>
+
+1. Clone o repositório em sua maquina utilizando :
+
+```sh
+  $ git clone https://github.com/Allan-Sartor/pontodesk-client.git
 ```
+2. Instale as dependências do projeto:
+```sh
+  $ yarn
+```
+3. Rode o projeto em modo desenvolvimento com:
+```sh
+  $ yarn run dev
+```
+3. Se tudo estiver certo, a aplicação irá iniciar no endereço http://localhost:3000/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<hr>
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+<h3>Rodando à API</h3>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+<a href="https://github.com/Allan-Sartor/pontodesk-server-v1">Acessar repósitorio da API</a>
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<strong>Obs</strong>: O front sempre rodará na porta 3000, já à API sempre na 3001.
 
-## Learn More
+E pronto, já é possivel acessar a aplicação.
 
-To learn more about Next.js, take a look at the following resources:
+<hr>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<h4 align="center">
+    Created by <a href="https://www.linkedin.com/in/allan-gustavo-aa6844131/" target="_blank">Allan Sartor</a>
+</h4>
