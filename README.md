@@ -49,7 +49,7 @@ Para o desenvolvimento do sistema, foram utilizados as principais ferramentas:
 ```
 3. Rode o projeto em modo desenvolvimento com:
 ```sh
-  $ yarn run dev
+  $ yarn dev
 ```
 3. Se tudo estiver certo, a aplicação irá iniciar no endereço http://localhost:3000/
 
