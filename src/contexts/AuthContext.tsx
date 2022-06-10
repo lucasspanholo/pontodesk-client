@@ -5,16 +5,15 @@ import Router from 'next/router'
 import { useToast } from "@chakra-ui/react";
 
 type User = {
-  email: string;
   name: string;
-  nickname: string;
-  image: string;
+  email: string;
   admin: boolean;
+  created_at: Date;
 }
 
 type AuthContextType = {
-  isAuthenticated: boolean;
   user: User;
+  isAuthenticated: boolean;
   signIn: (data: SignInData) => void;
 }
 
@@ -38,7 +37,6 @@ export function AuthProvider({ children }) {
       if (token) {
         await api.get('auth_token')
           .then((response) => {
-            console.log(response.data)
             setUser(response.data);
           })
           .catch((error) => {
@@ -48,7 +46,7 @@ export function AuthProvider({ children }) {
               status: 'error',
               isClosable: true,
             })
-          })
+          });
       }
     }
 
@@ -58,17 +56,9 @@ export function AuthProvider({ children }) {
   async function signIn({ email, password }: SignInData) {
     await api.post("auth", { email, password })
       .then((response) => {
-        console.log(response)
+        const token = response.data.token
 
-        if (response.data.errors) {
-          toast({
-            title: 'Usuário ou senha inválidos!',
-            position: 'top-right',
-            status: 'error',
-            isClosable: true,
-          })
-        } else {
-          const token = response.data.token
+        if (token) {
           setUser(response.data.user)
 
           setCookie(undefined, 'pontodesk.token', token,
@@ -87,10 +77,18 @@ export function AuthProvider({ children }) {
           } else {
             Router.push('calls')
           }
+
+        } else {
+          toast({
+            title: 'Usuário ou senha inválidos!',
+            position: 'top-right',
+            status: 'error',
+            isClosable: true,
+          })
         }
-      }).catch(() => {
+      }).catch((error) => {
         toast({
-          title: 'Não foi possível se conectar ao servidor!',
+          title: `${error.message}`,
           position: 'top-right',
           status: 'error',
           isClosable: true,
