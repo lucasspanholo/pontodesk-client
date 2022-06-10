@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import ButtonLightOrDark from "../components/ButtonLightOrDark";
+import { Logo } from "../components/Header/Logo";
 
 type SignInFormData = {
   email: string;
@@ -34,16 +35,12 @@ export default function SignIn() {
 
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center" flexDirection="column">
-      <Text
-        fontSize={["3xl", "5xl"]}
-        fontWeight="bold"
-        marginBottom="5"
-      >
-        Pontodesk
-        <Text as="span" color="green.500">
-          .
-        </Text>
-      </Text>
+      <Logo
+        fontsize={["3xl", "5xl"]}
+        marginBottom={5}
+        width={0}
+      />
+
       <Flex
         as="form"
         w="100%"
@@ -86,7 +83,7 @@ export default function SignIn() {
           <Text mr={3} mt={4} color={color}>
             Não possui conta?
             <Link ml={2} href="/signup">
-            Clique aqui!
+              Clique aqui!
             </Link>
           </Text>
         </Flex>

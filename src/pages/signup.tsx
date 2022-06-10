@@ -1,12 +1,17 @@
-import { Button, Flex, Link, Stack, Text, toast, useToast } from "@chakra-ui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Button, Flex, Stack, useColorModeValue, useToast } from "@chakra-ui/react";
+
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
 import { Input } from "../components/Form/Input";
-import { api, apiCreateUser } from "../services/api";
+import { Logo } from "../components/Header/Logo";
+import { Form } from "../components/Form";
+
+import { apiCreateUser } from "../services/api";
 import Router from 'next/router'
 
-interface SignUpProps {
+type SignUpProps = {
   name: string;
   email: string;
   password: string;
@@ -20,12 +25,13 @@ const signInFormSchema = yup.object().shape({
   password_confirmation: yup.string().required('A confirmação da senha é obrigatória').oneOf([yup.ref('password')], 'As senhas devem corresponder!'),
 })
 
-function SignUp({ }: SignUpProps) {
+function SignUp() {
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signInFormSchema)
   });
   const { errors } = formState;
   const toast = useToast();
+  const bg = useColorModeValue('gray.50', 'gray.800')
 
   async function handleCreateUser({ name, email, password, password_confirmation }: SignUpProps) {
     const userData = { name, email, password, password_confirmation };
@@ -39,8 +45,8 @@ function SignUp({ }: SignUpProps) {
         isClosable: true,
       })
 
-      setTimeout(() => {Router.push('/')}, 1000); // delay 1 second
-      
+      setTimeout(() => { Router.push('/') }, 1000); // delay 1 second
+
     } catch (error) {
       toast({
         title: 'Usuário já cadastrado no sistema!',
@@ -53,25 +59,15 @@ function SignUp({ }: SignUpProps) {
 
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center" flexDirection="column">
-      <Text
-        fontSize={["3xl", "5xl"]}
-        fontWeight="bold"
-        marginBottom="5"
-      >
-        Pontodesk
-        <Text as="span" color="pink.500">
-          .
-        </Text>
-      </Text>
-      <Flex
-        as="form"
-        w="100%"
-        maxWidth={360}
-        bg="gray.800"
-        p="8" // medida chakra
-        borderRadius={8}
-        flexDir="column"
-        onSubmit={handleSubmit(handleCreateUser)}
+      <Logo
+        fontsize={["3xl", "5xl"]}
+        marginBottom={5}
+        width={0}
+      />
+
+      <Form
+        onsubmit={handleSubmit(handleCreateUser)}
+        bg={bg}
       >
         <Stack spacing="4">
           <Input
@@ -110,13 +106,13 @@ function SignUp({ }: SignUpProps) {
         <Button
           type="submit"
           mt="6"
-          colorScheme="pink"
+          colorScheme="green"
           size="lg"
           isLoading={formState.isSubmitting}
         >
           Cadastrar
         </Button>
-      </Flex>
+      </Form>
     </Flex>
   );
 }
