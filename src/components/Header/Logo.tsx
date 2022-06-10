@@ -1,12 +1,19 @@
 import { Text } from "@chakra-ui/react";
 
-export function Logo() {
+type LogoProps = {
+  fontsize?: string[];
+  marginBottom?: number;
+  width?: number;
+}
+
+export function Logo({ fontsize, marginBottom, width }: LogoProps) {
   return (
     <Text 
-      fontSize={["2xl", "3xl"]}
+      fontSize={fontsize ? fontsize : ["2xl", "3xl"]}
       fontWeight="bold" 
       letterSpacing="tight" 
-      w="64"
+      w={width ? width : "64"}
+      marginBottom={marginBottom}
     >
       Pontodesk
       <Text as="span" color="green.500">
