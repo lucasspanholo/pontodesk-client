@@ -39,7 +39,8 @@ function SignUp({ }: SignUpProps) {
         isClosable: true,
       })
 
-      Router.push('/')
+      setTimeout(() => {Router.push('/')}, 1000); // delay 1 second
+      
     } catch (error) {
       toast({
         title: 'Usuário já cadastrado no sistema!',

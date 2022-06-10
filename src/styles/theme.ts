@@ -33,7 +33,7 @@ export const theme = extendTheme({
       "200": "#9AE6B4",
       "100": "#C6F6D5",
       "50": "#F0FFF4",
-    }
+    },
   },
   styles: {
     global: (props) => ({

@@ -25,7 +25,7 @@ export default function SignIn() {
 
   const { errors } = formState;
 
-  const bg = useColorModeValue('gray.50', 'gray.900')
+  const bg = useColorModeValue('gray.50', 'gray.800')
   const color = useColorModeValue('green', 'green.600')
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
