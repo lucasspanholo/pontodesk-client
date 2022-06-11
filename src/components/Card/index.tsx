@@ -1,7 +1,7 @@
-import { Flex } from '@chakra-ui/react'
-import React, { ReactElement } from 'react'
-import { Header } from '../Header'
-import { Sidebar } from '../Sidebar'
+import { Flex } from '@chakra-ui/react';
+import React, { ReactElement } from 'react';
+import { Header } from '../Header';
+import { Sidebar } from '../Sidebar';
 
 type CardProps = {
   children: ReactElement;
