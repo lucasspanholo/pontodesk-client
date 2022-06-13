@@ -72,12 +72,15 @@ export function AuthProvider({ children }) {
             isClosable: true,
           })
 
-          if (user.admin) {
-            Router.push('dashboard')
-          } else {
-            Router.push('calls')
-          }
-
+          return (
+            setTimeout(() => {
+              if (user.admin) {
+                Router.push('dashboard')
+              } else {
+                Router.push('calls')
+              }
+            }, 1000) // 1 seconds 
+          )
         } else {
           toast({
             title: 'Usuário ou senha inválidos!',
