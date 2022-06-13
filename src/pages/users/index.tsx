@@ -162,7 +162,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const users = data.users
   const pagination = data.pagination.meta
-
+  
   return {
     props: {
       users,

@@ -74,7 +74,7 @@ export function AuthProvider({ children }) {
 
           return (
             setTimeout(() => {
-              if (user.admin) {
+              if (response.data.user === true) {
                 Router.push('dashboard')
               } else {
                 Router.push('calls')
