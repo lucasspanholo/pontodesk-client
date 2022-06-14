@@ -74,12 +74,12 @@ export function AuthProvider({ children }) {
 
           return (
             setTimeout(() => {
-              if (response.data.user === true) {
+              if (response.data.user.admin === true) {
                 Router.push('dashboard')
               } else {
                 Router.push('calls')
               }
-            }, 1000) // 1 seconds 
+            }, 500) // 500 miliseconds 
           )
         } else {
           toast({
