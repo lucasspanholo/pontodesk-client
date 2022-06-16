@@ -21,7 +21,7 @@ export default function CardBox({ title, buttonRedirect, children }: CardBoxProp
             as="a"
             size="sm"
             fontSize="sm"
-            colorScheme="pink"
+            colorScheme="green"
             cursor="pointer"
             leftIcon={<Icon as={RiAddLine} fontSize="20" />}
           >
