@@ -44,7 +44,7 @@ export function Header() {
 
       <SearchBox showSearchBox={isWideVersion} />
 
-      <ButtonLightOrDark />
+      <ButtonLightOrDark ml={3}/>
 
       <Flex align="center" ml="auto">
         <NotificationNav />
