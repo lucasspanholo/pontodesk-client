@@ -1,4 +1,4 @@
-import { Flex, Button, Stack, Text, Link, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Button, Stack, Text, Link, useColorModeValue, Box } from "@chakra-ui/react";
 import { Input } from "../components/Form/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -88,7 +88,9 @@ export default function SignIn() {
           </Text>
         </Flex>
       </Flex>
-      <ButtonLightOrDark />
+      <Flex mt={2}>
+        <ButtonLightOrDark />
+      </Flex>
     </Flex>
   );
 }
