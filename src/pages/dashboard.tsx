@@ -9,7 +9,7 @@ export default function Dashboard() {
 
   return (
     <Card>
-      <SimpleGrid flex="1" gap="4" minChildWidth="320px" alignItems="flex-start">
+      <SimpleGrid flex="1" gap="4" minChildWidth="360px" alignItems="flex-start">
           <Box
             p={["6", "8"]}
             bg={bg}
@@ -24,6 +24,30 @@ export default function Dashboard() {
             borderRadius={8}
           >
             <Charts title="Total de chamados na semana" />
+          </Box>
+
+          <Box
+            p={["6", "8"]}
+            bg={bg}
+            borderRadius={8}
+          >
+            <Charts title="Quantidade de chamados por setor" />
+          </Box>
+
+          <Box
+            p={["6", "8"]}
+            bg={bg}
+            borderRadius={8}
+          >
+            <Charts title="Principais problemas" />
+          </Box>
+
+          <Box
+            p={["6", "8"]}
+            bg={bg}
+            borderRadius={8}
+          >
+            <Charts title="Média de avaliações" />
           </Box>
 
         </SimpleGrid>
