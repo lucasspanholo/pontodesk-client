@@ -2,11 +2,13 @@ import { Button, Icon, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import { RiMoonLine, RiSunLine } from 'react-icons/ri'
 
-export default function ButtonLightOrDark() {
+export default function ButtonLightOrDark({...rest}) {
   const { colorMode, toggleColorMode } = useColorMode()
 
   return (
-    <Button onClick={toggleColorMode}>
+    <Button onClick={toggleColorMode}
+      {...rest}
+    >
       {colorMode === 'light' ?
         <Icon as={RiMoonLine} fontSize="20" />
         :
