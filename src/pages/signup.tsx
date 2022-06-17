@@ -10,16 +10,19 @@ import { Form } from "../components/Form";
 
 import { apiCreateUser } from "../services/api";
 import Router from 'next/router'
+import { Select } from "../components/Form/Select";
 
 type SignUpProps = {
   name: string;
   email: string;
   password: string;
   password_confirmation: string;
+  sector: string;
 }
 
 const signInFormSchema = yup.object().shape({
   name: yup.string().required('Nome obrigatório'),
+  sector: yup.string().required('Selecione uma opção'),
   email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
   password: yup.string().required('Senha obrigatória').min(8, "No mínimo 8 caracteres"),
   password_confirmation: yup.string().required('A confirmação da senha é obrigatória').oneOf([yup.ref('password')], 'As senhas devem corresponder!'),
@@ -33,15 +36,17 @@ function SignUp() {
   const toast = useToast();
   const bg = useColorModeValue('gray.50', 'gray.800')
 
-  async function handleCreateUser({ name, email, password, password_confirmation }: SignUpProps) {
-    const userData = { name, email, password, password_confirmation };
+  async function handleCreateUser({ name, email, password, password_confirmation, sector }: SignUpProps) {
+    const userData = { name, email, password, password_confirmation, sector };
 
     try {
       await apiCreateUser.post('users', userData)
+
       toast({
         title: 'Conta cadastrada com sucesso!',
         position: 'top-right',
         status: 'success',
+        duration: 2000, // 2 seconds
         isClosable: true,
       })
 
@@ -52,6 +57,7 @@ function SignUp() {
         title: 'Usuário já cadastrado no sistema!',
         position: 'top-right',
         status: 'error',
+        duration: 2000, // 2 seconds
         isClosable: true,
       })
     }
@@ -76,6 +82,14 @@ function SignUp() {
             label="Nome Completo"
             error={errors.name}
             {...register("name")}
+          />
+
+          <Select
+            name="sector"
+            label="Setor"
+            error={errors.sector}
+            ref={register("sector")}
+            {...register("sector")}
           />
 
           <Input
