@@ -16,6 +16,7 @@ export function NotificationNav() {
       title: 'Logout realizado com sucesso!',
       position: 'top-right',
       status: 'success',
+      duration: 2000, // 2 seconds
       isClosable: true,
     })
 

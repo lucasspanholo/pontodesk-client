@@ -44,6 +44,7 @@ export function AuthProvider({ children }) {
               title: `${error.message}`,
               position: 'top-right',
               status: 'error',
+              duration: 2000, // 2 seconds
               isClosable: true,
             })
           });
@@ -69,6 +70,7 @@ export function AuthProvider({ children }) {
             title: 'Login realizado com sucesso!',
             position: 'top-right',
             status: 'success',
+            duration: 2000, // 2 seconds
             isClosable: true,
           })
 
@@ -86,6 +88,7 @@ export function AuthProvider({ children }) {
             title: 'Usuário ou senha inválidos!',
             position: 'top-right',
             status: 'error',
+            duration: 2000, // 2 seconds
             isClosable: true,
           })
         }
